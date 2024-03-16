@@ -17,14 +17,7 @@ const HomeScreen: FC = () => {
     <View style={styles.container}>
       <Header />
 
-      <View style={styles.Header}>
-        <View style={styles.topContent}>
-          <Text style={styles.io}>Weather</Text>
-
-        </View>
-      </View>
-
-      <StatusBar style={'auto'} />
+      <StatusBar style={'dark'} />
     </View>
   );
 };
@@ -38,22 +31,5 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingTop: 60,
     position: "relative",
-  },
-  io: {
-    fontSize: 24,
-    marginLeft: 20,
-    color: 'gray',
-    fontStyle: 'italic',
-    fontFamily: 'bold',
-  },
-  Header: {
-    position: 'absolute',
-    top: 50,
-    width: width,
-  },
-  topContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
 });
