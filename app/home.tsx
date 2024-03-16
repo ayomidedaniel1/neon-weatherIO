@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
   io: {
     fontSize: 24,
     marginLeft: 20,
-    fontWeight: "800",
-    color: '#FFF',
+    color: 'gray',
     fontStyle: 'italic',
+    fontFamily: 'bold',
   },
   Header: {
     position: 'absolute',

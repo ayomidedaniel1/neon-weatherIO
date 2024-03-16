@@ -2,6 +2,7 @@ import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -39,6 +40,10 @@ export default function RootLayout() {
 function RootLayoutNav() {
 
   return (
-    <Stack screenOptions={{ headerShown: false }} />
+    <SafeAreaProvider>
+      <Stack>
+        <Stack.Screen name="index" options={{ headerShown: false }} />
+      </Stack>
+    </SafeAreaProvider>
   );
 }
