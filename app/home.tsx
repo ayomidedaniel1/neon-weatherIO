@@ -2,16 +2,14 @@ import { StatusBar } from "expo-status-bar";
 import {
   Dimensions,
   StyleSheet,
-  Text,
   View
 } from "react-native";
 
-import { FC } from 'react';
 import Header from "@/components/Header";
 
 const { width } = Dimensions.get('screen');
 
-const HomeScreen: FC = () => {
+const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
