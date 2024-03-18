@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 type DataProps = {
   temperature: number;
@@ -9,13 +9,21 @@ type DataProps = {
 };
 
 const WeatherData = ({ temperature, humidity, windSpeed, description }: DataProps) => {
+  const [celsius, setCelsius] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (temperature) {
+      const tempInCelsius = temperature - 273.15;
+      setCelsius(Math.round(tempInCelsius));
+    }
+  }, [temperature]);
 
   return (
     <View style={styles.container}>
       <View style={styles.dataContainer}>
         <View style={styles.dataLeftContainer}>
           <View style={styles.tempContainer}>
-            <Text style={styles.topTitle}>{temperature}°</Text>
+            <Text style={styles.topTitle}>{celsius}°</Text>
             <Text style={styles.title}>Temperature</Text>
           </View>
 
