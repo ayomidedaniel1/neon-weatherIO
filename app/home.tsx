@@ -1,19 +1,28 @@
 import { StatusBar } from "expo-status-bar";
 import {
-  Dimensions,
   StyleSheet,
+  Text,
   View
 } from "react-native";
 
 import Header from "@/components/Header";
-
-const { width } = Dimensions.get('screen');
+import SearchInput from "@/components/SearchInput";
+import WeatherData from "@/components/WeatherData";
 
 const HomeScreen = () => {
 
   return (
     <View style={styles.container}>
       <Header />
+
+      <SearchInput />
+
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Toronto</Text>
+        <Text style={styles.titleText}>Showing weather for Toronto</Text>
+      </View>
+
+      <WeatherData />
 
       <StatusBar style={'dark'} />
     </View>
@@ -29,5 +38,18 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingTop: 60,
     position: "relative",
+    paddingHorizontal: 20,
+  },
+  titleContainer: {
+    flexDirection: 'column',
+  },
+  title: {
+    color: '#000',
+    fontSize: 42,
+    fontFamily: 'semibold',
+  },
+  titleText: {
+    color: 'gray',
+    fontSize: 16,
   },
 });

@@ -18,18 +18,21 @@ const styles = StyleSheet.create({
   io: {
     fontSize: 24,
     marginLeft: 20,
-    color: 'gray',
-    fontStyle: 'italic',
-    fontFamily: 'bold',
+    color: 'black',
+    fontFamily: 'medium',
   },
   Header: {
     position: 'absolute',
     top: 50,
     width: width,
+    borderWidth: .5,
+    borderTopColor: 'transparent',
+    borderBottomColor: '#000',
   },
   topContent: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginBottom: 10,
   },
 });
