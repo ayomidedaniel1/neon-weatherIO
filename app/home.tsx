@@ -14,12 +14,15 @@ import WeatherData from "@/components/WeatherData";
 import WeatherForecast from "@/components/WeatherForecast";
 import { useWeatherStore } from "@/utils/weatherStore";
 import { useLocation } from '@/hooks/useLocation';
+import { useDailyForecastStore } from '@/utils/dailyForecastStore';
 
 const HomeScreen = () => {
+  const location = useLocation();
   const { loading, weatherData, fetchWeatherData } = useWeatherStore();
+  const { isLoading, forecastData, fetchForecastData } = useDailyForecastStore();
+
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
-  const location = useLocation();
 
   useEffect(() => {
     if (location) {
@@ -30,7 +33,13 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (latitude && longitude) {
-      fetchWeatherData(`${BASE_URL}?lat=${latitude}&lon=${longitude}&appid=${OPEN_WEATHER_API_KEY}`);
+      fetchWeatherData(`${BASE_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${OPEN_WEATHER_API_KEY}`);
+    }
+  }, [latitude, longitude]);
+
+  useEffect(() => {
+    if (latitude && longitude) {
+      fetchForecastData(`${BASE_URL}/forecast?lat=${latitude}&lon=${longitude}&cnt=5&appid=${OPEN_WEATHER_API_KEY}`);
     }
   }, [latitude, longitude]);
 
@@ -55,9 +64,13 @@ const HomeScreen = () => {
             windSpeed={weatherData?.wind?.speed}
             description={weatherData?.weather[0]?.description}
           />
-
-          <WeatherForecast />
         </>
+      )}
+
+      {isLoading ? (
+        <ActivityIndicator size={24} color={'#000'} />
+      ) : (
+        <WeatherForecast forecastData={forecastData?.list} />
       )}
 
       <StatusBar style={'dark'} />

@@ -1,7 +1,14 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
-const WeatherForecast = () => {
+const WeatherForecast = ({ forecastData }: any) => {
+  console.log('daily forecast >>>', forecastData);
+
+  const getDayOfWeek = (date: string) => {
+    const day = new Date(date);
+    return new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(day);
+  };
+
   return (
     <ScrollView
       horizontal
@@ -9,35 +16,14 @@ const WeatherForecast = () => {
       style={styles.container}
     >
 
-      <View style={styles.forecastContainer}>
-        <Text style={styles.day}>Monday</Text>
-        <Text style={styles.temperature}>22°</Text>
-        <Text style={styles.description}>Sunny</Text>
-      </View>
+      {forecastData.map(((data: any, index: number) => (
+        <View style={styles.forecastContainer} key={data.dt + index}>
+          <Text style={styles.day}>{getDayOfWeek(data.dt)}</Text>
+          <Text style={styles.temperature}>{Math.round(data.main.temp - 273.15)}°</Text>
+          <Text style={styles.description}>{data?.weather[0].main}</Text>
+        </View>
+      )))}
 
-      <View style={styles.forecastContainer}>
-        <Text style={styles.day}>Monday</Text>
-        <Text style={styles.temperature}>22°</Text>
-        <Text style={styles.description}>Sunny</Text>
-      </View>
-
-      <View style={styles.forecastContainer}>
-        <Text style={styles.day}>Monday</Text>
-        <Text style={styles.temperature}>22°</Text>
-        <Text style={styles.description}>Sunny</Text>
-      </View>
-
-      <View style={styles.forecastContainer}>
-        <Text style={styles.day}>Monday</Text>
-        <Text style={styles.temperature}>22°</Text>
-        <Text style={styles.description}>Sunny</Text>
-      </View>
-
-      <View style={styles.forecastContainer}>
-        <Text style={styles.day}>Monday</Text>
-        <Text style={styles.temperature}>22°</Text>
-        <Text style={styles.description}>Sunny</Text>
-      </View>
     </ScrollView>
   );
 };
@@ -57,6 +43,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     marginRight: 18,
     height: 120,
+    width: 140,
   },
   day: {
     color: '#000',
