@@ -8,6 +8,7 @@ import {
 import Header from "@/components/Header";
 import SearchInput from "@/components/SearchInput";
 import WeatherData from "@/components/WeatherData";
+import WeatherForecast from "@/components/WeatherForecast";
 
 const HomeScreen = () => {
 
@@ -23,6 +24,8 @@ const HomeScreen = () => {
       </View>
 
       <WeatherData />
+
+      <WeatherForecast />
 
       <StatusBar style={'dark'} />
     </View>

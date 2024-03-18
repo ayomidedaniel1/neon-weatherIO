@@ -13,10 +13,10 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    bold: require('../assets/fonts/Outfit-Bold.ttf'),
     light: require('../assets/fonts/Outfit-Light.ttf'),
-    medium: require('../assets/fonts/Outfit-Medium.ttf'),
     regular: require('../assets/fonts/Outfit-Regular.ttf'),
+    medium: require('../assets/fonts/Outfit-Medium.ttf'),
+    bold: require('../assets/fonts/Outfit-Bold.ttf'),
     semibold: require('../assets/fonts/Outfit-SemiBold.ttf'),
   });
 

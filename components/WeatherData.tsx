@@ -19,13 +19,13 @@ const WeatherData = () => {
 
         <View style={styles.dataRightContainer}>
           <View style={styles.tempContainer}>
-            <Text style={styles.topTitle}>Clear</Text>
-            <Text style={styles.title}>Description</Text>
+            <Text style={[styles.topTitle, { textAlign: 'right' }]}>Clear</Text>
+            <Text style={[styles.title, { textAlign: 'right' }]}>Description</Text>
           </View>
 
           <View style={styles.tempContainer}>
-            <Text style={styles.bottomTitle}>5.1 m/s</Text>
-            <Text style={styles.title}>Wind speed</Text>
+            <Text style={[styles.bottomTitle, { textAlign: 'right' }]}>5.1 m/s</Text>
+            <Text style={[styles.title, { textAlign: 'right' }]}>Wind speed</Text>
           </View>
         </View>
       </View>
@@ -54,16 +54,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 24,
   },
-  tempContainer: {},
+  tempContainer: {
+    flexDirection: 'column',
+  },
   topTitle: {
     color: '#000',
     fontFamily: 'semibold',
-    fontSize: 32,
+    fontSize: 40,
   },
   bottomTitle: {
     color: '#000',
     fontFamily: 'medium',
-    fontSize: 24,
+    fontSize: 26,
   },
   title: {
     color: 'gray',
