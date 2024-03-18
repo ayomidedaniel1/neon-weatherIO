@@ -40,12 +40,12 @@ const HomeScreen = () => {
 
       <SearchInput />
 
-      {(loading && !weatherData) ? (
-        <ActivityIndicator />
+      {loading ? (
+        <ActivityIndicator size={24} color={'#000'} />
       ) : (
         <>
           <View style={styles.titleContainer}>
-            <Text style={styles.title}>Toronto</Text>
+            <Text style={styles.title}>{weatherData?.name}</Text>
             <Text style={styles.titleText}>Showing weather for Toronto</Text>
           </View>
 
@@ -78,6 +78,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flexDirection: 'column',
+    marginBottom: 12,
   },
   title: {
     color: '#000',
