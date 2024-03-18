@@ -1,11 +1,24 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { BASE_URL, OPEN_WEATHER_API_KEY } from '@env';
+import { ActivityIndicator, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { useDailyForecastStore } from '@/utils/dailyForecastStore';
 
-const WeatherForecast = ({ forecastData }: any) => {
-  console.log('daily forecast >>>', forecastData);
+type ForecastProps = {
+  longitude: number | null;
+  latitude: number | null;
+};
 
-  const getDayOfWeek = (date: string) => {
-    const day = new Date(date);
+const WeatherForecast = ({ longitude, latitude }: ForecastProps) => {
+  const { isLoading, forecastData, fetchForecastData } = useDailyForecastStore();
+
+  useEffect(() => {
+    if (latitude && longitude) {
+      fetchForecastData(`${BASE_URL}/forecast?lat=${latitude}&lon=${longitude}&cnt=5&appid=${OPEN_WEATHER_API_KEY}`);
+    }
+  }, [latitude, longitude]);
+
+  const getDayOfWeek = (date: any) => {
+    const day = new Date(date * 1000);
     return new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(day);
   };
 
@@ -16,13 +29,17 @@ const WeatherForecast = ({ forecastData }: any) => {
       style={styles.container}
     >
 
-      {forecastData.map(((data: any, index: number) => (
-        <View style={styles.forecastContainer} key={data.dt + index}>
-          <Text style={styles.day}>{getDayOfWeek(data.dt)}</Text>
-          <Text style={styles.temperature}>{Math.round(data.main.temp - 273.15)}°</Text>
-          <Text style={styles.description}>{data?.weather[0].main}</Text>
-        </View>
-      )))}
+      {isLoading ? (
+        <ActivityIndicator size={24} color={'#000'} style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', }} />
+      ) : (
+        forecastData?.list.map(((data: any, index: number) => (
+          <View style={styles.forecastContainer} key={data.dt + index}>
+            <Text style={styles.day}>{getDayOfWeek(data.dt)}</Text>
+            <Text style={styles.temperature}>{Math.round(data.main.temp - 273.15)}°</Text>
+            <Text style={styles.description}>{data?.weather[0].main}</Text>
+          </View>
+        )))
+      )}
 
     </ScrollView>
   );

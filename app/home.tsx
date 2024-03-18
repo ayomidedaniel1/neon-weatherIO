@@ -19,7 +19,6 @@ import { useDailyForecastStore } from '@/utils/dailyForecastStore';
 const HomeScreen = () => {
   const location = useLocation();
   const { loading, weatherData, fetchWeatherData } = useWeatherStore();
-  const { isLoading, forecastData, fetchForecastData } = useDailyForecastStore();
 
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
@@ -34,12 +33,6 @@ const HomeScreen = () => {
   useEffect(() => {
     if (latitude && longitude) {
       fetchWeatherData(`${BASE_URL}/weather?lat=${latitude}&lon=${longitude}&appid=${OPEN_WEATHER_API_KEY}`);
-    }
-  }, [latitude, longitude]);
-
-  useEffect(() => {
-    if (latitude && longitude) {
-      fetchForecastData(`${BASE_URL}/forecast?lat=${latitude}&lon=${longitude}&cnt=5&appid=${OPEN_WEATHER_API_KEY}`);
     }
   }, [latitude, longitude]);
 
@@ -64,13 +57,12 @@ const HomeScreen = () => {
             windSpeed={weatherData?.wind?.speed}
             description={weatherData?.weather[0]?.description}
           />
-        </>
-      )}
 
-      {isLoading ? (
-        <ActivityIndicator size={24} color={'#000'} />
-      ) : (
-        <WeatherForecast forecastData={forecastData?.list} />
+          <WeatherForecast
+            latitude={latitude}
+            longitude={longitude}
+          />
+        </>
       )}
 
       <StatusBar style={'dark'} />
