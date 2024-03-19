@@ -12,6 +12,7 @@ export const useWeatherStore = create<WeatherStoreState>((set) => ({
   weatherData: null,
   fetchWeatherData: async (url) => {
     try {
+      set({ loading: true });
       const response = await axios.get(url);
       const data = await response.data;
       set({ weatherData: data, loading: false });

@@ -13,16 +13,30 @@ const SearchInput = ({ searchQuery, setSearchQuery, handleSearch }: SearchInputP
     setSearchQuery(text);
   };
 
+  const handleSearchPress = () => {
+    Keyboard.dismiss();
+    handleSearch();
+  };
+
+  // Function to dismiss the keyboard when users press enter on the keyboard
+  const handleKeyPress = (event: any) => {
+    if (event.nativeEvent.key === 'Enter') {
+      Keyboard.dismiss();
+      handleSearch();
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.textInput}
         value={searchQuery}
         onChangeText={handleChangeText}
-        onSubmitEditing={Keyboard.dismiss}
+        onSubmitEditing={handleSearchPress}
+        onKeyPress={handleKeyPress}
       />
 
-      <TouchableOpacity onPress={() => handleSearch()} style={styles.searchBtn}>
+      <TouchableOpacity onPress={handleSearchPress} style={styles.searchBtn}>
         <Text style={styles.btnText}>Search</Text>
       </TouchableOpacity>
     </View>

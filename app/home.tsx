@@ -46,11 +46,12 @@ const HomeScreen = () => {
 
         if (weatherData.cod === '404') {
           Toast.show('City not found');
+        } else {
+          const { lat, lon } = weatherData.coord;
+          setLatitude(lat);
+          setLongitude(lon);
         }
 
-        const { lat, lon } = weatherData.coord;
-        setLatitude(lat);
-        setLongitude(lon);
       } catch (error) {
         console.log(error);
         Toast.show('Some error occurred!. Try again');
