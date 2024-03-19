@@ -34,6 +34,8 @@ const SearchInput = ({ searchQuery, setSearchQuery, handleSearch }: SearchInputP
         onChangeText={handleChangeText}
         onSubmitEditing={handleSearchPress}
         onKeyPress={handleKeyPress}
+        placeholder='Enter a city or location'
+        placeholderTextColor={'#999999'}
       />
 
       <TouchableOpacity onPress={handleSearchPress} style={styles.searchBtn}>
