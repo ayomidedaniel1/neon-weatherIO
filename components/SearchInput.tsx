@@ -1,15 +1,28 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import React from 'react';
+import { Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 
-const SearchInput = () => {
+type SearchInputProps = {
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  handleSearch: () => void;
+};
+
+const SearchInput = ({ searchQuery, setSearchQuery, handleSearch }: SearchInputProps) => {
+
+  const handleChangeText = (text: string) => {
+    setSearchQuery(text);
+  };
 
   return (
     <View style={styles.container}>
       <TextInput
         style={styles.textInput}
+        value={searchQuery}
+        onChangeText={handleChangeText}
+        onSubmitEditing={Keyboard.dismiss}
       />
 
-      <TouchableOpacity onPress={() => { }} style={styles.searchBtn}>
+      <TouchableOpacity onPress={() => handleSearch()} style={styles.searchBtn}>
         <Text style={styles.btnText}>Search</Text>
       </TouchableOpacity>
     </View>

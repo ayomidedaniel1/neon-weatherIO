@@ -5,24 +5,26 @@ import {
   ActivityIndicator,
   StyleSheet,
   Text,
-  View,
+  View
 } from "react-native";
+import Toast from 'react-native-root-toast';
 
 import Header from "@/components/Header";
 import SearchInput from "@/components/SearchInput";
 import WeatherData from "@/components/WeatherData";
 import WeatherForecast from "@/components/WeatherForecast";
-import { useWeatherStore } from "@/utils/weatherStore";
 import { useLocation } from '@/hooks/useLocation';
-import { useDailyForecastStore } from '@/utils/dailyForecastStore';
+import { useWeatherStore } from "@/utils/weatherStore";
 
 const HomeScreen = () => {
   const location = useLocation();
   const { loading, weatherData, fetchWeatherData } = useWeatherStore();
 
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
 
+  // useeffect to find user coordinated so as to display weather info on app initial load
   useEffect(() => {
     if (location) {
       setLatitude(location.coords.latitude);
@@ -36,11 +38,31 @@ const HomeScreen = () => {
     }
   }, [latitude, longitude]);
 
+  // Function to handle city search
+  const handleSearch = async () => {
+    if (searchQuery) {
+      try {
+        fetchWeatherData(`${BASE_URL}/weather?q=${searchQuery}&appid=${OPEN_WEATHER_API_KEY}`);
+
+        if (weatherData.cod === '404') {
+          Toast.show('City not found');
+        }
+
+        const { lat, lon } = weatherData.coord;
+        setLatitude(lat);
+        setLongitude(lon);
+      } catch (error) {
+        console.log(error);
+        Toast.show('Some error occurred!. Try again');
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header />
 
-      <SearchInput />
+      <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleSearch={handleSearch} />
 
       {loading ? (
         <ActivityIndicator size={24} color={'#000'} />
@@ -48,7 +70,7 @@ const HomeScreen = () => {
         <>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{weatherData?.name}</Text>
-            <Text style={styles.titleText}>Showing weather for Toronto</Text>
+            <Text style={styles.titleText}>Showing todays' weather for {weatherData?.name}</Text>
           </View>
 
           <WeatherData
