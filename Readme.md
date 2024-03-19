@@ -1,8 +1,21 @@
 
 # Weather io
 
-To run your project, run one of the following npm commands.
+## Run locally
 
-- npm run android
-- npm run ios
-- npm run web
+To run the project, you need to run the following command:
+
+```bash
+
+git clone https://github.com/ayomidedaniel1/neon-weatherIO.git
+cd neon-weatherio
+
+npm install
+npm start
+npx run android
+
+or
+
+npx run ios
+
+```

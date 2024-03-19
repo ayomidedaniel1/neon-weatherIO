@@ -1,5 +1,5 @@
+import React from 'react';
 import { Keyboard, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
 
 type SearchInputProps = {
   searchQuery: string;
