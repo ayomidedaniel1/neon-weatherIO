@@ -13,9 +13,20 @@ const WeatherForecast = ({ longitude, latitude }: ForecastProps) => {
 
   useEffect(() => {
     if (latitude && longitude) {
-      fetchForecastData(`${BASE_URL}/forecast?lat=${latitude}&lon=${longitude}&cnt=5&appid=${OPEN_WEATHER_API_KEY}`);
+      fetchForecastData(`${BASE_URL}/forecast?lat=${latitude}&lon=${longitude}&appid=${OPEN_WEATHER_API_KEY}`);
     }
   }, [latitude, longitude]);
+
+  const groupForecastByDay = () => {
+    const groupedData: any = {};
+    forecastData?.list.forEach((data: any) => {
+      const date = new Date(data.dt * 1000).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' });
+      if (!groupedData[date]) {
+        groupedData[date] = data;
+      }
+    });
+    return Object.values(groupedData);
+  };
 
   const getDayOfWeek = (date: any) => {
     const day = new Date(date * 1000);
@@ -32,7 +43,7 @@ const WeatherForecast = ({ longitude, latitude }: ForecastProps) => {
       {isLoading ? (
         <ActivityIndicator size={24} color={'#000'} style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', }} />
       ) : (
-        forecastData?.list.map(((data: any, index: number) => (
+        groupForecastByDay().map(((data: any, index: number) => (
           <View style={styles.forecastContainer} key={data.dt + index}>
             <Text style={styles.day}>{getDayOfWeek(data.dt)}</Text>
             <Text style={styles.temperature}>{Math.round(data.main.temp - 273.15)}°</Text>
